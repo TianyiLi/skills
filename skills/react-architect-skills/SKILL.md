@@ -11,10 +11,11 @@ metadata:
 
 ## Architectural Principles
 
-1.  **Colocation**: Code that changes together stays together. Assets, styles, tests, and components related to a specific feature reside within that feature's module.
-2.  **Encapsulation**: Feature modules are "black boxes". They expose a strict public API (via `index.ts`) and hide internal implementation details. Other modules must not import from inside a module's private folders.
-3.  **Unidirectional Data Flow**: Data flows down (Props), Events flow up (Callbacks). Side effects and state management are lifted to the integration layer (Containers).
-4.  **Separation of Concerns**:
+1.  **All features modules should be create in `modules` repo**
+2.  **Colocation**: Code that changes together stays together. Assets, styles, tests, and components related to a specific feature reside within that feature's module.
+3.  **Encapsulation**: Feature modules are "black boxes". They expose a strict public API (via `index.ts`) and hide internal implementation details. Other modules must not import from inside a module's private folders.
+4.  **Unidirectional Data Flow**: Data flows down (Props), Events flow up (Callbacks). Side effects and state management are lifted to the integration layer (Containers).
+5.  **Separation of Concerns**:
     -   **Presentational Layer (Components)**: Pure UI, styling, and interaction. No business logic.
     -   **Integration Layer (Containers/Pages)**: Connects UI to Data/Logic.
     -   **Domain Layer (Hooks/Utils)**: Reusable business logic and data transformations.
