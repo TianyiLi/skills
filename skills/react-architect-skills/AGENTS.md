@@ -6,7 +6,7 @@ Full guide for agents. Skill definition and triggers: [SKILL.md](SKILL.md).
 
 1.  **All features modules should be create in `modules` repo**
 2.  **Colocation**: Code that changes together stays together. Assets, styles, tests, and components related to a specific feature reside within that feature's module.
-3.  **Encapsulation**: Feature modules are "black boxes". They expose a strict public API (via `index.ts`) and hide internal implementation details. Other modules must not import from inside a module's private folders.
+3.  **Encapsulation**: Feature modules are "black boxes". They expose public API through explicitly named files (not barrel `index.ts`). Enforce module boundaries via ESLint rules (e.g., `eslint-plugin-boundaries`, `eslint-plugin-import/no-restricted-paths`) instead of barrel re-exports.
 4.  **Unidirectional Data Flow**: Data flows down (Props), Events flow up (Callbacks). Side effects and state management are lifted to the integration layer (Containers).
 5.  **Separation of Concerns**:
     -   **Presentational Layer (Components)**: Pure UI, styling, and interaction. No business logic.
@@ -96,8 +96,7 @@ feature-module/
 ├── pages/              # Route entry points (Lazy Load Boundaries)
 ├── stores/             # Complex state management (Global/Cross-component)
 ├── types/              # Domain interfaces and types
-├── utils/              # Pure functions and transformations
-└── index.ts            # PUBLIC INTERFACE (Exports only what other modules need)
+└── utils/              # Pure functions and transformations
 ```
 
 ## Layer Guidelines
@@ -192,9 +191,11 @@ The `common` module is a special project-level module for generic, domain-agnost
 
 ## Cross-Module Communication
 
-1.  **Strict Boundary**: Modules cannot import deep files from other modules.
-    -   ❌ `import { InternalComp } from '../other-module/components/InternalComp'`
-    -   ✅ `import { PublicContainer } from '../other-module'` (via `index.ts`)
+1.  **Strict Boundary**: Modules cannot import internal implementation details from other modules.
+    -   ❌ `import { InternalComp } from '../other-module/components/internal-comp'`
+    -   ✅ `import { ProfileContainer } from '../user-profile/containers/profile-container'`
+    -   Enforce boundaries with ESLint rules (`eslint-plugin-boundaries` or `eslint-plugin-import/no-restricted-paths`) to restrict which folders/files are importable across modules.
+    -   **No barrel files (`index.ts`)**: Barrel re-exports cause 200-800ms import overhead and break tree-shaking. Import directly from source files.
 2.  **Data Sharing**:
     -   **URL**: Prefer sharing state via URL parameters (Single Source of Truth).
     -   **Global Store**: For persistent session data (Auth, Theme).

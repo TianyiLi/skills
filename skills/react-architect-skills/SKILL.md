@@ -30,7 +30,7 @@ Use this skill when:
 | Presentational | `components/` | Pure UI, props-down/events-up, no optional/redundant props |
 
 - **Naming**: kebab-case for files and folders; suffixes like `-page`, `-container`, `-context`, `.types`, `.schema`, `use-*` for hooks.
-- **Modules**: Domain-first boundaries (e.g. `user-profile`, `order-processing`); flat structure; public API via `index.ts` only.
+- **Modules**: Domain-first boundaries (e.g. `user-profile`, `order-processing`); flat structure; direct imports from source files (no barrel `index.ts`); enforce boundaries via ESLint rules.
 - **Pure components**: Pass primitives/specific values, not full data shapes; required props only; validate undefined in parent.
 
 For the complete architecture guide (principles, module structure, layer rules, naming, no redundant/optional params, common module, cross-module communication, testing): **[AGENTS.md](AGENTS.md)**.
