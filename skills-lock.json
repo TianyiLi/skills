@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "skill-judge": {
+      "source": "softaworks/agent-toolkit",
+      "sourceType": "github",
+      "computedHash": "ff132ba281d460d3cf7814601e304f24e795a606a8e20e78f1bd103258bc735c"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+---
+description: Zustand store conventions — selectors, persist, middleware order. Use when editing store files.
+globs: "**/stores/**/*.ts,**/*store*.ts"
+alwaysApply: false
+---
+
+# Zustand Stores
+
+When editing Zustand store files, follow these and see **skill [SKILL.md](../SKILL.md)** in this folder for full guidance.
+
+- **Selectors**: In components, select only needed fields (e.g. `useStore(s => s.count)`) or use `useShallow` for multiple; avoid `useStore()` with no selector.
+- **Persist**: Use `partialize` to persist only serializable state; exclude functions and class instances.
+- **Middleware order** (innermost first): store creator → immer → subscribeWithSelector → devtools → persist.
+- **Scaling**: Prefer slice functions composed in one `create` call, or multiple small stores by domain; avoid one giant store.

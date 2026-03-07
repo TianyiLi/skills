@@ -20,6 +20,10 @@ Use this skill when:
 - Deciding where code belongs (colocation, encapsulation, layer separation)
 - Designing pure component props (no redundant/optional params) or cross-module communication
 
+**When to load the full guide:** For tasks that involve **module boundaries**, **layer layout**, **naming conventions**, or **cross-module communication**, read **[AGENTS.md](AGENTS.md)** in full before proceeding.
+
+**Do NOT load AGENTS.md** for single-file renames, style-only changes, or when only fixing a typo or a single component’s logic.
+
 ## Quick Reference
 
 | Layer | Folders | Purpose |
@@ -33,4 +37,4 @@ Use this skill when:
 - **Modules**: Domain-first boundaries (e.g. `user-profile`, `order-processing`); flat structure; direct imports from source files (no barrel `index.ts`); enforce boundaries via ESLint rules.
 - **Pure components**: Pass primitives/specific values, not full data shapes; required props only; validate undefined in parent.
 
-For the complete architecture guide (principles, module structure, layer rules, naming, no redundant/optional params, common module, cross-module communication, testing): **[AGENTS.md](AGENTS.md)**.
+Full guide (principles, module structure, layer rules, naming, common module, cross-module communication, testing): **[AGENTS.md](AGENTS.md)**.

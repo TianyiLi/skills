@@ -14,6 +14,15 @@ Full guide for agents. Skill definition and triggers: [SKILL.md](SKILL.md).
     -   **Domain Layer (Hooks/Utils)**: Reusable business logic and data transformations.
     -   **Data Layer (API/Store)**: Server state synchronization and client state management.
 
+## Before Defining a Module or Placing a File
+
+Ask yourself:
+
+- **Domain boundary**: Which business capability does this belong to? (e.g. checkout, identity, product-catalog.)
+- **Common vs feature**: Is this generic and domain-agnostic (→ `common`) or specific to one feature (→ feature module)?
+- **Layer**: Is this Data (api/stores), Domain (hooks/utils/types/contexts), Integration (containers/pages), or Presentational (components)?
+- **Public API**: If other modules will use this, which file(s) are the allowed entry points? (No barrel `index.ts`; use explicit named files.)
+
 ## Feature Module Classification
 
 ### Module Splitting Criteria
@@ -31,6 +40,13 @@ Choose module boundaries based on these principles (in order of priority):
 3.  **Route-Level Separation**
     -   Each major route group = separate module.
     -   **Constraint**: Route-based modules should map to Domain boundaries where possible.
+
+| Scenario | Primary criterion | Example |
+|----------|--------------------|---------|
+| New business flow | Domain/Business (DDD) | `order-processing`, `checkout` |
+| Align with design sections | Design (Figma) | One module per major screen/flow |
+| New top-level route | Route-level (map to domain where possible) | `/analytics` → `analytics-dashboard` |
+| Shared, domain-agnostic code | Common module | Design system, `useMediaQuery`, formatters |
 
 ### Module Granularity Guidelines
 
@@ -200,6 +216,8 @@ The `common` module is a special project-level module for generic, domain-agnost
     -   **URL**: Prefer sharing state via URL parameters (Single Source of Truth).
     -   **Global Store**: For persistent session data (Auth, Theme).
     -   **Events**: For loose coupling (rarely needed in React, prefer State lifting).
+
+**When existing code doesn’t follow this structure:** Prefer incremental refactors (e.g. move one folder at a time, add ESLint rules gradually). Do not rewrite entire modules at once; enforce boundaries in new code and at module borders first.
 
 ## Code Quality & Testing Standards
 

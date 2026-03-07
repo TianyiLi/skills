@@ -1,6 +1,6 @@
 ---
 name: reduce-optional-params
-description: Reduces optional parameters in functions and components for cleaner APIs. Use when designing or refactoring functions with many optional params, configurable components, or when the user mentions optional params, function signatures, or API simplification.
+description: "Use when designing or refactoring functions with many optional params, configurable components, or when the user mentions optional params, function signatures, or API simplification. Reduces optional parameters in functions and components for cleaner APIs."
 ---
 
 # Reduce Optional Parameters
@@ -13,6 +13,8 @@ Guidance for simplifying function and component signatures by reducing optional 
 - Refactoring code with many optional arguments
 - Code review when spotting 3+ optional params
 - User asks about cleaner API design or reducing optional params
+
+**Before adding an optional param, ask:** (1) Is there a concrete use case? (2) Would a separate function or preset make intent clearer? (3) Would callers pass this only in a few places? (If yes, a dedicated function or preset may be clearer.)
 
 ## Strategies (Choose by Context)
 
@@ -29,6 +31,8 @@ function fetchUser(id: string, options?: { includeProfile?: boolean; cache?: boo
 ```
 
 Use when: Params are loosely related and callers typically pass 0–2 at a time.
+
+**Edge case:** If one option is required in most call sites, keep it as a required positional param and put the rest in the options object (e.g. `fetchUser(id, { includeProfile: true })`).
 
 ### 2. Split Into Focused Functions
 
@@ -116,6 +120,7 @@ Use when: 5+ options and fluent-style API is acceptable in the codebase.
 4. **Common presets** → Factory/preset functions
 5. **Generic vs specific paths** → Narrower functions with required params
 6. **5+ options, complex config** → Builder or options object
+7. **None of the above fits** → Prefer options object to keep one function; document defaults and avoid optional params that change behavior in non-obvious ways.
 
 ## Anti-Patterns
 
